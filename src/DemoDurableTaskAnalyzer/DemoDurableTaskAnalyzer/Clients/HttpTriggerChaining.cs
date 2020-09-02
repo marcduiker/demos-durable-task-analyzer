@@ -8,19 +8,16 @@ using DemoDurableTaskAnalyzer.Orchestrators;
 
 namespace DemoDurableTaskAnalyzer
 {
-    public class GetFilmActorsClient
+    public class HttpTriggerChaining
     {
-        [FunctionName(nameof(GetFilmActorsClient))]
+        [FunctionName(nameof(HttpTriggerChaining))]
         public async Task<HttpResponseMessage> Run(
           [HttpTrigger(AuthorizationLevel.Function, nameof(HttpMethod.Get))] HttpRequestMessage requestMessage,
           [DurableClient] IDurableClient client,
           ILogger logger)
         {
-            var queryParameters = requestMessage.RequestUri.ParseQueryString();
-            var filmName = queryParameters.Get("film");
             var instanceId = await client.StartNewAsync(
-                nameof(GetFilmActorsOrchestrator),
-                filmName);
+                nameof(ChainingOrchestrator));
 
             return client.CreateCheckStatusResponse(requestMessage, instanceId);
         }
