@@ -5,13 +5,13 @@ namespace DemoDurableTaskAnalyzer.Models
 {
     public class OrchestratorResult
     {
-        public OrchestratorResult()
+        public OrchestratorResult(string instanceId)
         {
-            Id = Guid.NewGuid();
+            Id = instanceId;
             Items = new List<string>();
         }
 
-        public Guid Id { get; }
+        public string Id { get; }
 
         public List<string> Items { get; set; }
     }
