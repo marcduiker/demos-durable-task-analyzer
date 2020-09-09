@@ -17,7 +17,7 @@ namespace DemoDurableTaskAnalyzer
           ILogger logger)
         {
             var instanceId = await client.StartNewAsync(
-                nameof(ChainingOrchestrator));
+                nameof(OrchestratorWithDF1xxWarnings));
 
             return client.CreateCheckStatusResponse(requestMessage, instanceId);
         }

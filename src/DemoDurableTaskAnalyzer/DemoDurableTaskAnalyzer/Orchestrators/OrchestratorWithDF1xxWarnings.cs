@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DemoDurableTaskAnalyzer.Orchestrators
 {
-    public class ChainingOrchestrator
+    public class OrchestratorWithDF1xxWarnings
     {
-        [FunctionName(nameof(ChainingOrchestrator))]
+        [FunctionName(nameof(OrchestratorWithDF1xxWarnings))]
         public async Task<OrchestratorResult> Run(
-          [OrchestrationTrigger] IDurableOrchestrationContext context,
+          [OrchestrationTrigger] DurableOrchestrationContext context,
           ILogger logger)
         {
             // https://docs.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-code-constraints
@@ -68,10 +68,10 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
             // DF108 Activity function call is using the wrong argument type.
             (Guid Guid, DateTime Date) activityInput = (context.NewGuid(), context.CurrentUtcDateTime);
             //(DateTime Date, Guid Guid) activityInput = (context.CurrentUtcDateTime, context.NewGuid());
-            var activityUsingNameOfResult = await context.CallActivityAsync<string>(
+            var activityWithDateTimeAndGuidTupleResult = await context.CallActivityAsync<string>(
                 nameof(ActivityWithDateTimeAndGuidTuple),
                 activityInput);
-            orchestrationResult.Items.Add(activityUsingNameOfResult);
+            orchestrationResult.Items.Add(activityWithDateTimeAndGuidTupleResult);
 
             // DF109 Activity function call references unknown Activity function.
             await context.CallActivityAsync<string>(
@@ -87,6 +87,10 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
             await context.CallActivityAsync<Guid>(
                 nameof(ActivityWithGuidParameter),
                 context.NewGuid());
+            //await context.CallActivityAsync<string>(
+            //    nameof(ActivityWithGuidParameter),
+            //    context.NewGuid());
+
 
             return orchestrationResult;
         }

@@ -1,8 +1,8 @@
-# @name chaining
-GET http://localhost:7071/api/HttpTriggerChaining
+# @name orchestrator
+GET http://localhost:7071/api/OrchestratorWithDF1xxWarnings
 
 ###
-@instanceId = {{chaining.response.body.$.id}}
+@instanceId = {{orchestrator.response.body.$.id}}
 GET http://localhost:7071/runtime/webhooks/durabletask/instances/{{instanceId}}
     ?taskHub=DemoDurableTaskAnalyzerV1
     &connection=Storage
