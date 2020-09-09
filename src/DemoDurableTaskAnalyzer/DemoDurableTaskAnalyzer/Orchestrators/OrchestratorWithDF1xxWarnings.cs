@@ -13,7 +13,7 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
     {
         [FunctionName(nameof(OrchestratorWithDF1xxWarnings))]
         public async Task<OrchestratorResult> Run(
-          [OrchestrationTrigger] DurableOrchestrationContext context,
+          [OrchestrationTrigger] IDurableOrchestrationContext context,
           ILogger logger)
         {
             // https://docs.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-code-constraints
