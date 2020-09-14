@@ -6,7 +6,6 @@ namespace DemoDurableTaskAnalyzer.Activities
 {
     public class ActivityWithGuidParameter
     {
-
         [FunctionName(nameof(ActivityWithGuidParameter))]
         public string Run(
           [ActivityTrigger] Guid guid)
