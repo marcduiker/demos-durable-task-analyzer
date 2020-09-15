@@ -48,7 +48,7 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
             //await context.CreateTimer(timeToContinue, CancellationToken.None);
 
             // DF104 Thread and Task calls must be deterministic inside an orchestrator function.
-            var externalResult = await Task.Run(() => { return CallToApiWhichReturnsSomethingDifferentEachTime(); } );
+            var externalResult = await Task.Run(() => { return DoSomeWorkOnAnotherThread(); } );
             // Perform the code inside an activity.
 
             // DF105 I/O operations are not allowed inside an orchestrator function.
@@ -62,7 +62,7 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
             // DF106 Environment variables must be accessed in a deterministic way inside an orchestrator function.
             var someSetting = Environment.GetEnvironmentVariable("SettingThatWillBeChangedWhenYouLeastExpectIt");
 
-            // DF107 Methods definied in source code that are used in an orchestrator must be deterministic.
+            // DF107 Methods defined in source code that are used in an orchestrator must be deterministic.
             var newGuidFromMethod = GetMeANewGuid();
 
             // DF108 Activity function call is using the wrong argument type.
@@ -95,9 +95,9 @@ namespace DemoDurableTaskAnalyzer.Orchestrators
             return orchestrationResult;
         }
 
-        private static string CallToApiWhichReturnsSomethingDifferentEachTime()
+        private static string DoSomeWorkOnAnotherThread()
         {
-            return "or maybe not";
+            return "DON'T!";
         }
 
         private static Guid GetMeANewGuid()
